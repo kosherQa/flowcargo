@@ -26,18 +26,70 @@
 }
 
 @layer base {
-  body {
-    @apply bg-background text-text-primary antialiased;
+  /* 1. Глобальные переменные адаптивных отступов */
+  :root {
+    --spacing-x: 1rem;      /* 16px на мобильных (320px+) */
+    --spacing-y: 3rem;      /* 48px на мобильных */
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --spacing-x: 2rem;    /* 32px на планшетах (md) */
+      --spacing-y: 5rem;    /* 80px на планшетах */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --spacing-x: 3rem;    /* 48px на десктопах (lg) */
+      --spacing-y: 8rem;    /* 128px на десктопах */
+    }
+  }
+
+  /* 2. Правильный Box Sizing для всех элементов */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* 3. Сглаживание шрифтов (премиальный вид текста) */
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 4. Полное исключение горизонтального скролла */
+  html, body {
+    @apply bg-background text-text-primary;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* 5. Плавные переходы для адаптивности (чтобы при ресайзе окна элементы не "прыгали") */
+  h1, h2, h3, h4, h5, h6, p, section, main, header, footer, div {
+    transition: padding 0.4s ease, margin 0.4s ease, font-size 0.4s ease, gap 0.4s ease;
   }
 }
 
 @layer utilities {
+  /* Утилиты для использования CSS-переменных отступов напрямую, если потребуется */
+  .px-global {
+    padding-left: var(--spacing-x);
+    padding-right: var(--spacing-x);
+  }
+
+  .py-global {
+    padding-top: var(--spacing-y);
+    padding-bottom: var(--spacing-y);
+  }
+
   .beveled-glow {
     box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 
                 inset 0 -1px 2px rgba(0, 0, 0, 0.5);
   }
   
-  /* Footer utility classes */
+  /* Утилиты для подвала (Footer) */
   .footer-label {
     font-size: var(--text-footer-header);
     line-height: 1.2;
@@ -58,10 +110,19 @@
     color: var(--color-primary);
   }
   
-  /* Softer ambient shadow with reduced opacity */
+  /* Мягкая "эмбиент" тень */
   .shadow-ambient {
     --tw-shadow: 0px 24px 48px -12px rgba(0, 0, 0, 0.35);
     --tw-shadow-colored: 0px 24px 48px -12px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+  /* Скрытие скроллбара (необходимо для сайдбара в админке на планшетах) */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE & Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Safari & Chrome */
   }
 }
