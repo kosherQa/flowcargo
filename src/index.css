@@ -19,6 +19,10 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --shadow-ambient: 0px 24px 48px -12px rgba(0, 0, 0, 0.5);
+  
+  /* Footer micro-typography variables */
+  --text-footer-header: 11px;
+  --text-footer-link: 14px;
 }
 
 @layer base {
@@ -31,5 +35,33 @@
   .beveled-glow {
     box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 
                 inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Footer utility classes */
+  .footer-label {
+    font-size: var(--text-footer-header);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+  }
+  
+  .footer-link {
+    font-size: var(--text-footer-link);
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .footer-link:hover {
+    color: var(--color-primary);
+  }
+  
+  /* Softer ambient shadow with reduced opacity */
+  .shadow-ambient {
+    --tw-shadow: 0px 24px 48px -12px rgba(0, 0, 0, 0.35);
+    --tw-shadow-colored: 0px 24px 48px -12px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 }

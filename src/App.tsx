@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, ReactNode, FormEvent, useMemo } from 'react';
+import { useState, useEffect, ReactNode, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Plane, 
@@ -40,8 +40,6 @@ import {
 
 // --- Types ---
 
-type Language = 'RU' | 'KZ';
-
 interface Order {
   id: string;
   customer: string;
@@ -62,51 +60,6 @@ interface UserData {
   name: string;
   email: string;
 }
-
-const TRANSLATIONS = {
-  RU: {
-    heroTitle: 'Доставка грузов из Китая в Казахстан',
-    heroSub: 'Профессиональные логистические решения с архитектурным подходом к каждому маршруту.',
-    aboutTitle: 'О компании',
-    aboutDesc: 'FlowCargo — это не просто доставка. Это точность, скорость и полная сохранность вашего груза. Мы используем передовые технологии для оптимизации каждого этапа перевозки.',
-    benefits: [
-      { title: 'Скорость', desc: 'Оптимизированные маршруты сокращают время доставки на 30%.' },
-      { title: 'Сохранность', desc: 'Многоуровневая система контроля и страхование каждого груза.' },
-      { title: 'Архитектурный подход', desc: 'Проектируем логистику как искусство, исключая любые задержки.' }
-    ],
-    trackTitle: 'Отследить груз',
-    trackPlaceholder: 'Например, FLW-1234-56',
-    trackBtn: 'Отследить',
-    loginBtn: 'Регистрация',
-    getStarted: 'Начать работу',
-    calculator: 'Калькулятор',
-    solutions: 'Решения',
-    network: 'Сеть',
-    company: 'Компания',
-    contact: 'Контакты',
-  },
-  KZ: {
-    heroTitle: 'Қытайдан Қазақстанға жүк тасымалдау',
-    heroSub: 'Әр бағытқа архитектуралық тәсілмен кәсіби логистикалық шешімдер.',
-    aboutTitle: 'Компания туралы',
-    aboutDesc: 'FlowCargo — бұл жай ғана жеткізу емес. Бұл дәлдік, жылдамдық және жүгіңіздің толық қауіпсіздігі. Біз тасымалдаудың әрбір кезеңін оңтайландыру үшін озық технологияларды қолданамыз.',
-    benefits: [
-      { title: 'Жылдамдық', desc: 'Оңтайландырылған маршруттар жеткізу уақытын 30%-ға қысқартады.' },
-      { title: 'Қауіпсіздік', desc: 'Көпдеңгейлі бақылау жүйесі және әрбір жүкті сақтандыру.' },
-      { title: 'Архитектуралық тәсіл', desc: 'Логистиканы кез келген кідірістерді болдырмайтын өнер ретінде жобалаймыз.' }
-    ],
-    trackTitle: 'Жүкті қадағалау',
-    trackPlaceholder: 'Мысалы, FLW-1234-56',
-    trackBtn: 'Қадағалау',
-    loginBtn: 'Тіркелу',
-    getStarted: 'Жұмысты бастау',
-    calculator: 'Калькулятор',
-    solutions: 'Шешімдер',
-    network: 'Желі',
-    company: 'Компания',
-    contact: 'Байланыс',
-  }
-};
 
 // --- Initial Data ---
 
@@ -428,24 +381,6 @@ const LoginModal = ({ isOpen, onClose, onLogin }: { isOpen: boolean, onClose: ()
               <p className="text-white/40 text-sm mt-1">Войдите, чтобы управлять вашими заказами</p>
             </div>
 
-            {/* Google Login */}
-            <button className="w-full py-3.5 bg-black border border-white/10 rounded-full flex items-center justify-center gap-3 hover:bg-white/5 transition-colors mb-6">
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c3.11 0 5.72-1.03 7.63-2.81l-3.57-2.77c-1 .67-2.28 1.07-4.06 1.07-3.12 0-5.76-2.11-6.71-4.94H1.71v2.86C3.6 20.13 7.53 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.29 13.55c-.24-.72-.38-1.48-.38-2.27s.14-1.55.38-2.27V6.15H1.71C.62 8.33 0 10.78 0 13.35s.62 5.02 1.71 7.2l3.58-2.86c-.24-.72-.38-1.48-.38-2.27z"/>
-                <path fill="#EA4335" d="M12 4.84c1.67 0 3.18.58 4.35 1.71l3.27-3.27C17.6 1.19 15.01 0 12 0 7.53 0 3.6 2.87 1.71 6.15l3.58 2.86c.95-2.83 3.59-4.94 6.71-4.94z"/>
-              </svg>
-              <span className="text-white font-medium">Google</span>
-            </button>
-
-            {/* Divider */}
-            <div className="relative flex items-center mb-8">
-              <div className="flex-grow border-t border-white/5"></div>
-              <span className="flex-shrink mx-4 text-white/20 text-sm">или</span>
-              <div className="flex-grow border-t border-white/5"></div>
-            </div>
-
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-white ml-1">Email</label>
@@ -499,14 +434,7 @@ const LoginModal = ({ isOpen, onClose, onLogin }: { isOpen: boolean, onClose: ()
   );
 };
 
-// --- Components ---
-
-const MobileMenu = ({ isOpen, onClose, onOpenCalculator, t }: { isOpen: boolean, onClose: () => void, onOpenCalculator: () => void, t: any }) => {
-  const menuItems = [
-    { name: t.solutions, href: '#solutions' },
-    { name: t.company, href: '#about' },
-  ];
-
+const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -529,34 +457,9 @@ const MobileMenu = ({ isOpen, onClose, onOpenCalculator, t }: { isOpen: boolean,
             </button>
           </div>
 
-          <nav className="flex flex-col gap-8">
-            {menuItems.map((item, i) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 + 0.2 }}
-                className="text-5xl font-display font-extrabold text-white hover:text-[#00FF9D] transition-colors tracking-tight"
-                onClick={onClose}
-              >
-                {item.name}
-              </motion.a>
-            ))}
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              onClick={() => { onOpenCalculator(); onClose(); }}
-              className="text-5xl font-display font-extrabold text-white hover:text-[#00FF9D] transition-left text-left tracking-tight"
-            >
-              {t.calculator}
-            </motion.button>
-          </nav>
-
           <div className="mt-auto">
             <button className="w-full py-5 bg-[#00FF9D] text-black rounded-full font-bold text-xl shadow-[0_0_30px_rgba(0,255,157,0.2)]">
-              {t.getStarted}
+              Начать работу
             </button>
           </div>
         </motion.div>
@@ -619,7 +522,7 @@ const CalculatorModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                   <div className="p-2 bg-primary rounded-lg">
                     <CalculatorIcon className="w-5 h-5 text-background" />
                   </div>
-                  <h2 className="text-2xl font-bold text-text-primary">Shipping Calculator</h2>
+                  <h2 className="text-2xl font-bold text-text-primary">Калькулятор доставки</h2>
                 </div>
                 <button onClick={onClose} className="p-2 hover:bg-surface-variant rounded-full transition-colors">
                   <X className="w-6 h-6 text-text-secondary" />
@@ -629,22 +532,22 @@ const CalculatorModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               <form onSubmit={calculate} className="space-y-8">
                 <div className="grid grid-cols-2 gap-8">
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Origin</label>
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Откуда</label>
                     <input 
                       type="text" 
                       required
-                      placeholder="City, Country"
+                      placeholder="Город, Страна"
                       value={formData.origin}
                       onChange={e => setFormData({...formData, origin: e.target.value})}
                       className="w-full py-2 bg-transparent border-b-2 border-surface-variant focus:border-primary outline-none transition-all text-text-primary font-medium placeholder:text-text-secondary/30"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Destination</label>
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Куда</label>
                     <input 
                       type="text" 
                       required
-                      placeholder="City, Country"
+                      placeholder="Город, Страна"
                       value={formData.destination}
                       onChange={e => setFormData({...formData, destination: e.target.value})}
                       className="w-full py-2 bg-transparent border-b-2 border-surface-variant focus:border-primary outline-none transition-all text-text-primary font-medium placeholder:text-text-secondary/30"
@@ -654,7 +557,7 @@ const CalculatorModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
 
                 <div className="grid grid-cols-2 gap-8">
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Weight (kg)</label>
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Вес (кг)</label>
                     <input 
                       type="number" 
                       required
@@ -672,16 +575,16 @@ const CalculatorModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Type of Cargo</label>
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-text-secondary">Тип груза</label>
                     <select 
                       value={formData.type}
                       onChange={e => setFormData({...formData, type: e.target.value})}
                       className="w-full py-2 bg-transparent border-b-2 border-surface-variant focus:border-primary outline-none transition-all text-text-primary font-medium appearance-none"
                     >
-                      <option className="bg-surface">Standard</option>
-                      <option className="bg-surface">Fragile</option>
-                      <option className="bg-surface">Hazardous</option>
-                      <option className="bg-surface">Temperature Controlled</option>
+                      <option className="bg-surface">Стандартный</option>
+                      <option className="bg-surface">Хрупкий</option>
+                      <option className="bg-surface">Опасный</option>
+                      <option className="bg-surface">Температурный режим</option>
                     </select>
                   </div>
                 </div>
@@ -695,7 +598,7 @@ const CalculatorModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                       : 'bg-[#00FF9D] text-black hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] hover:brightness-110'
                   }`}
                 >
-                  {isCalculating ? 'Computing Flow...' : 'Calculate Estimate'}
+                  {isCalculating ? 'Расчет...' : 'Рассчитать стоимость'}
                   {isCalculating && (
                     <div className="w-full max-w-[120px] h-1 mt-1">
                       <SegmentedPulse progress={0.7} />
@@ -711,9 +614,9 @@ const CalculatorModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     className="mt-8 p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl text-center"
                   >
-                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-text-secondary mb-4">Estimated Cost</p>
+                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-text-secondary mb-4">Примерная стоимость</p>
                     <h3 className="text-[2.5rem] md:text-[3rem] font-display font-extrabold text-[#00FF9D] tracking-tight leading-none mb-6">
-                      Примерная стоимость: {result.toLocaleString()} ₸
+                      {result.toLocaleString()} ₸
                     </h3>
                     <div className="space-y-2 pt-4 border-t border-white/5">
                       <p className="text-sm text-text-secondary font-medium">Срок доставки: <span className="text-text-primary">5-7 дней</span></p>
@@ -770,7 +673,7 @@ const ServiceCard = ({ icon: Icon, title, description }: { icon: any, title: str
       <p className="text-text-secondary leading-relaxed">{description}</p>
       
       <div className="mt-6 flex items-center text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-        Learn more <ArrowRight className="ml-2 w-4 h-4" />
+        Подробнее <ArrowRight className="ml-2 w-4 h-4" />
       </div>
     </motion.div>
   );
@@ -790,7 +693,6 @@ const FadeInUp = ({ children, delay = 0 }: { children: ReactNode, delay?: number
 // --- Main App ---
 
 export default function App() {
-  const [lang, setLang] = useState<Language>('KZ');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
@@ -798,8 +700,6 @@ export default function App() {
   const [refNumber, setRefNumber] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [progress, setProgress] = useState(0.3);
-
-  const t = useMemo(() => TRANSLATIONS[lang], [lang]);
 
   useEffect(() => {
     const auth = sessionStorage.getItem('fc_auth');
@@ -831,43 +731,17 @@ export default function App() {
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
         onClose={() => setIsMobileMenuOpen(false)} 
-        onOpenCalculator={() => setIsCalculatorOpen(true)}
-        t={t}
       />
       
-      {/* Navigation */}
+      {/* Navigation - Simplified with only logo and buttons */}
       <nav className="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 h-[85px] flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2.5 group cursor-pointer">
-              <div className="w-9 h-9 bg-[#00FF9D] rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(0,255,157,0.2)] group-hover:scale-105 transition-transform">
-                <Package className="text-black w-5 h-5" />
-              </div>
-              <span className="text-xl font-display font-black tracking-tight text-white">FlowCargo</span>
+        <div className="max-w-7xl mx-auto px-6 h-[90px] flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-2.5 group cursor-pointer">
+            <div className="w-9 h-9 bg-[#00FF9D] rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(0,255,157,0.2)] group-hover:scale-105 transition-transform">
+              <Package className="text-black w-5 h-5" />
             </div>
-
-            {/* Region/Lang Switcher */}
-            <div className="relative group ml-2">
-              <button className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] font-bold text-white/40 hover:text-white transition-colors">
-                {lang} <ChevronDown className="w-3 h-3 opacity-50" />
-              </button>
-              <div className="absolute top-full left-0 mt-4 w-24 bg-[#0D0D0D] border border-white/5 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 transition-all pointer-events-none group-hover:pointer-events-auto shadow-2xl">
-                <button onClick={() => setLang('RU')} className="w-full px-4 py-2.5 text-left text-[10px] font-bold tracking-widest hover:bg-white/5 hover:text-[#00FF9D] transition-colors border-b border-white/5">RU</button>
-                <button onClick={() => setLang('KZ')} className="w-full px-4 py-2.5 text-left text-[10px] font-bold tracking-widest hover:bg-white/5 hover:text-[#00FF9D] transition-colors">KZ</button>
-              </div>
-            </div>
-          </div>
-          
-          {/* Desktop Nav (Center) */}
-          <div className="hidden md:flex items-center gap-12">
-            <a href="#solutions" className="text-sm font-medium text-white/50 hover:text-white transition-colors duration-300">{t.solutions}</a>
-            <a href="#about" className="text-sm font-medium text-white/50 hover:text-white transition-colors duration-300">{t.company}</a>
-            <button 
-              onClick={() => setIsCalculatorOpen(true)}
-              className="text-sm font-medium text-white/50 hover:text-white transition-colors duration-300"
-            >
-              {t.calculator}
-            </button>
+            <span className="text-xl font-display font-black tracking-tight text-white">FlowCargo</span>
           </div>
 
           {/* Buttons (Right) */}
@@ -876,10 +750,10 @@ export default function App() {
               onClick={() => setIsLoginOpen(true)}
               className="text-sm font-bold text-white/60 hover:text-[#00FF9D] transition-colors duration-300"
             >
-              {t.loginBtn}
+              Регистрация
             </button>
             <button className="px-7 py-2.5 bg-[#00FF9D] text-black rounded-full text-sm font-bold hover:shadow-[0_0_25px_rgba(0,255,157,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
-              {t.getStarted}
+              Начать работу
             </button>
           </div>
 
@@ -902,17 +776,17 @@ export default function App() {
               China to Kazakhstan
             </div>
             <h1 className="text-6xl lg:text-7xl font-bold text-text-primary leading-[1.1] mb-8 tracking-tight">
-              {t.heroTitle}
+              Доставка грузов из Китая в Казахстан
             </h1>
             <p className="text-xl text-text-secondary mb-10 leading-relaxed max-w-lg">
-              {t.heroSub}
+              Профессиональные логистические решения с архитектурным подходом к каждому маршруту.
             </p>
             <div className="flex flex-wrap gap-4">
               <button className="px-8 py-4 bg-primary text-background rounded-xl font-bold text-lg hover:brightness-110 transition-all beveled-glow shadow-ambient shadow-primary/20 flex items-center gap-2">
-                {t.getStarted} <ArrowRight className="w-5 h-5" />
+                Начать работу <ArrowRight className="w-5 h-5" />
               </button>
               <a href="#about" className="px-8 py-4 bg-surface text-text-primary rounded-xl font-bold text-lg hover:bg-surface-container transition-all shadow-ambient flex items-center justify-center">
-                {t.aboutTitle}
+                О нас
               </a>
             </div>
           </FadeInUp>
@@ -924,8 +798,8 @@ export default function App() {
                 <Package className="w-32 h-32 text-primary" />
               </div>
               
-              <h2 className="text-2xl font-bold mb-2 text-text-primary">{t.trackTitle}</h2>
-              <p className="text-text-secondary mb-8">{t.trackPlaceholder}</p>
+              <h2 className="text-2xl font-bold mb-2 text-text-primary">Отследить груз</h2>
+              <p className="text-text-secondary mb-8">Например, FLW-1234-56</p>
               
               <div className="space-y-6">
                 <div className="relative">
@@ -956,7 +830,7 @@ export default function App() {
                   disabled={status === 'loading'}
                   className="w-full py-4 bg-primary text-background rounded-xl font-bold text-lg hover:brightness-110 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-ambient"
                 >
-                  {status === 'loading' ? 'Searching...' : t.trackBtn}
+                  {status === 'loading' ? 'Поиск...' : 'Отследить'}
                 </button>
 
                 <div className="pt-4">
@@ -972,7 +846,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* About Us Section - Expanded */}
+      {/* About Us Section - Hardcoded Russian */}
       <section id="about" className="overflow-hidden">
         {/* Part 1: History & Mission */}
         <div className="py-32 bg-surface relative">
@@ -1084,107 +958,40 @@ export default function App() {
           </div>
         </div>
 
-            {/* Part 4: Why Us */}
-            <div className="py-32 bg-surface-container">
-              <div className="max-w-7xl mx-auto px-6 text-center mb-20">
-                <h2 className="text-5xl font-display font-extrabold text-text-primary mb-6 tracking-tight">
-                  Почему выбирают FlowCargo
-                </h2>
-                <p className="text-text-secondary max-w-2xl mx-auto text-lg">
-                  Мы создали сервис, который закрывает все боли предпринимателей при работе с Китаем.
-                </p>
-              </div>
-              <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  { icon: Newspaper, title: 'Фото-отчет', desc: 'Детальные снимки вашего груза при получении на складе в Китае.' },
-                  { icon: ShieldCheck, title: 'Страхование 100%', desc: 'Полная финансовая ответственность за сохранность вашего товара.' },
-                  { icon: Truck, title: 'Собственный автопарк', desc: 'Современные фуры объемом 90-120 кубов для любых типов грузов.' },
-                  { icon: Layers, title: 'Таможня «под ключ»', desc: 'Берем на себя все вопросы по оформлению и очистке груза.' },
-                  { icon: User, title: 'Персональный менеджер', desc: 'Ваш личный эксперт на связи 24/7 по любым вопросам.' },
-                  { icon: CheckCircle2, title: 'Честные цены', desc: 'Никаких скрытых платежей и комиссий. Все прозрачно.' }
-                ].map((item, i) => (
-                  <div key={i}>
-                    <FadeInUp delay={i * 0.1}>
-                      <div className="p-8 bg-surface rounded-3xl border border-white/5 hover:border-primary/20 transition-all group">
-                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                          <item.icon className="w-7 h-7" />
-                        </div>
-                        <h4 className="text-xl font-bold mb-3 text-text-primary">{item.title}</h4>
-                        <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
-                      </div>
-                    </FadeInUp>
-                  </div>
-                ))}
-              </div>
-            </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#0D0D0D] pt-24 pb-12 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8 mb-20">
-            {/* Column 1: Brand */}
-            <div className="space-y-8">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 bg-[#00FF9D] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,255,157,0.2)]">
-                  <Package className="w-4.5 h-4.5 text-black" />
-                </div>
-                <span className="text-xl font-display font-extrabold tracking-tight text-white">FlowCargo</span>
-              </div>
-              <p className="text-white/50 text-[13px] leading-relaxed max-w-[220px]">
-                Интеллектуальная логистическая платформа для бизнеса нового поколения.
-              </p>
-            </div>
-
-            {/* Column 2: Categories */}
-            <div>
-              <h5 className="text-[11px] uppercase tracking-[0.15em] font-bold text-white/40 mb-8 font-display">КАТЕГОРИИ</h5>
-              <ul className="space-y-5">
-                {['Авиаперевозки', 'Ж/Д доставка', 'Морской фрахт', 'Автоперевозки', 'Сборные грузы', 'Таможня'].map(link => (
-                  <li key={link}>
-                    <a href="#" className="text-white/70 hover:text-[#00FF9D] text-[14px] font-sans transition-colors duration-300">{link}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 3: Company */}
-            <div>
-              <h5 className="text-[11px] uppercase tracking-[0.15em] font-bold text-white/40 mb-8 font-display">КОМПАНИЯ</h5>
-              <ul className="space-y-5">
-                {['О нас', 'Контакты', 'Карьера', 'Новости'].map(link => (
-                  <li key={link}>
-                    <a href={link === 'Новости' ? '#news' : '#'} className="text-white/70 hover:text-[#00FF9D] text-[14px] font-sans transition-colors duration-300">{link}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 4: Support */}
-            <div>
-              <h5 className="text-[11px] uppercase tracking-[0.15em] font-bold text-white/40 mb-8 font-display">ПОДДЕРЖКА</h5>
-              <ul className="space-y-5">
-                {['Помощь', 'Правила сервиса', 'Безопасность', 'API отслеживания'].map(link => (
-                  <li key={link}>
-                    <a href="#" className="text-white/70 hover:text-[#00FF9D] text-[14px] font-sans transition-colors duration-300">{link}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom Part: Copyright */}
-          <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-[10px] text-white/30 uppercase tracking-widest font-medium">
-              © 2024 FlowCargo. Все права защищены.
+        {/* Part 4: Why Us */}
+        <div className="py-32 bg-surface-container">
+          <div className="max-w-7xl mx-auto px-6 text-center mb-20">
+            <h2 className="text-5xl font-display font-extrabold text-text-primary mb-6 tracking-tight">
+              Почему выбирают FlowCargo
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto text-lg">
+              Мы создали сервис, который закрывает все боли предпринимателей при работе с Китаем.
             </p>
-            <div className="flex gap-8">
-              <a href="#" className="text-[10px] text-white/30 uppercase tracking-widest hover:text-[#00FF9D] transition-colors">Политика конфиденциальности</a>
-              <a href="#" className="text-[10px] text-white/30 uppercase tracking-widest hover:text-[#00FF9D] transition-colors">Условия использования</a>
-            </div>
+          </div>
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { icon: Newspaper, title: 'Фото-отчет', desc: 'Детальные снимки вашего груза при получении на складе в Китае.' },
+              { icon: ShieldCheck, title: 'Страхование 100%', desc: 'Полная финансовая ответственность за сохранность вашего товара.' },
+              { icon: Truck, title: 'Собственный автопарк', desc: 'Современные фуры объемом 90-120 кубов для любых типов грузов.' },
+              { icon: Layers, title: 'Таможня «под ключ»', desc: 'Берем на себя все вопросы по оформлению и очистке груза.' },
+              { icon: User, title: 'Персональный менеджер', desc: 'Ваш личный эксперт на связи 24/7 по любым вопросам.' },
+              { icon: CheckCircle2, title: 'Честные цены', desc: 'Никаких скрытых платежей и комиссий. Все прозрачно.' }
+            ].map((item, i) => (
+              <div key={i}>
+                <FadeInUp delay={i * 0.1}>
+                  <div className="p-8 bg-surface rounded-3xl border border-white/5 hover:border-primary/20 transition-all group">
+                    <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                      <item.icon className="w-7 h-7" />
+                    </div>
+                    <h4 className="text-xl font-bold mb-3 text-text-primary">{item.title}</h4>
+                    <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </FadeInUp>
+              </div>
+            ))}
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 }
